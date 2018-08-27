@@ -1,6 +1,6 @@
 package com.michelalves.cursomc.services;
 
-import java.util.Arrays;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -42,5 +42,9 @@ public class CategoriaService {
 		}catch(DataIntegrityViolationException e) {
 			throw new DataIntegrityException("Não é possível uma Categoria que possui produtos");
 		}
+	}
+	
+	public List<Categoria> findAll(){
+		return repo.findAll();
 	}
 }
