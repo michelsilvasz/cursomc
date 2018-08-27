@@ -3,10 +3,12 @@ package com.michelalves.cursomc.services;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.michelalves.cursomc.domain.Categoria;
 import com.michelalves.cursomc.repositories.CategoriaRepository;
+import com.michelalves.cursomc.services.exception.DataIntegrityException;
 import com.michelalves.cursomc.services.exception.ObjectNotFoundException;
 
 @Service
@@ -31,5 +33,14 @@ public class CategoriaService {
 	public Categoria update(Categoria obj) {
 		find(obj.getId());
 		return repo.save(obj);
+	}
+	
+	public void delete(Integer id) {
+		find(id);
+		try {
+			repo.delete(id);
+		}catch(DataIntegrityViolationException e) {
+			throw new DataIntegrityException("Não é possível uma Categoria que possui produtos");
+		}
 	}
 }
