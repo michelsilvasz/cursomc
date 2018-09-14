@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.michelalves.cursomc.domain.Categoria;
+import com.michelalves.cursomc.dto.CategoriaDTO;
 import com.michelalves.cursomc.repositories.CategoriaRepository;
 import com.michelalves.cursomc.services.exception.DataIntegrityException;
 import com.michelalves.cursomc.services.exception.ObjectNotFoundException;
@@ -55,5 +56,9 @@ public class CategoriaService {
 		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		
 		return repo.findAll(pageRequest);
+	}
+	
+	public Categoria fromDTO(CategoriaDTO objDto) {
+		return new Categoria(objDto.getId(), objDto.getNome());
 	}
 }
